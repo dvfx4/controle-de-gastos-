@@ -1,110 +1,92 @@
-let gastos =
-JSON.parse(localStorage.getItem("gastos")) || [];
+    const chat = document.getElementById("chat");
 
-function salvar() {
+function adicionarMensagem(texto, tipo){
 
-    localStorage.setItem(
-        "gastos",
-        JSON.stringify(gastos)
-    );
+    const div = document.createElement("div");
+
+    div.classList.add("mensagem");
+    div.classList.add(tipo);
+
+    div.innerHTML = texto;
+
+    chat.appendChild(div);
+
+    chat.scrollTop = chat.scrollHeight;
 
 }
 
-function adicionarGasto() {
+function respostaIA(texto){
 
-    const descricao =
-    document.getElementById("descricao").value;
+    adicionarMensagem(texto, "ia");
 
-    const valor =
-    parseFloat(
-        document.getElementById("valor").value
-    );
+}
 
-    const categoria =
-    document.getElementById("categoria").value;
+function enviarMensagem(){
 
-    const data =
-    document.getElementById("data").value;
+    const input =
+    document.getElementById("mensagem");
 
-    if(
-        !descricao ||
-        !valor ||
-        !data
-    ){
-        alert("Preencha tudo");
+    const texto =
+    input.value.trim();
+
+    if(!texto) return;
+
+    adicionarMensagem(texto, "usuario");
+
+    interpretarComando(texto);
+
+    input.value = "";
+
+}
+
+function interpretarComando(texto){
+
+    const comando =
+    texto.toLowerCase();
+
+    if(comando.startsWith("gastei")){
+
+        registrarGasto(comando);
         return;
+
     }
 
-    gastos.push({
-        descricao,
-        valor,
-        categoria,
-        data
-    });
+    if(comando.includes("me deve")){
 
-    salvar();
+        registrarRecebimento(comando);
+        return;
 
-    document.getElementById("descricao").value = "";
-    document.getElementById("valor").value = "";
+    }
 
-    listarGastos();
-}
+    if(comando.includes("quem me deve")){
 
-function excluirGasto(indice){
+        listarQuemDeve();
+        return;
 
-    gastos.splice(indice,1);
+    }
 
-    salvar();
+    if(
+        comando.includes("quanto gastei")
+    ){
 
-    listarGastos();
+        totalGastos();
+        return;
 
-}
+    }
 
-function listarGastos(){
+    if(
+        comando.includes(
+            "quanto tenho para receber"
+        )
+    ){
 
-    const lista =
-    document.getElementById("lista");
+        totalReceber();
+        return;
 
-    lista.innerHTML = "";
+    }
 
-    let total = 0;
-
-    const filtro =
-    document.getElementById("filtroMes").value;
-
-    gastos.forEach((gasto,indice)=>{
-
-        const mes =
-        new Date(gasto.data).getMonth();
-
-        if(
-            filtro !== "" &&
-            mes != filtro
-        ){
-            return;
-        }
-
-        total += gasto.valor;
-
-        lista.innerHTML += `
-        <tr>
-            <td>${gasto.data}</td>
-            <td>${gasto.descricao}</td>
-            <td>${gasto.categoria}</td>
-            <td>R$ ${gasto.valor.toFixed(2)}</td>
-            <td>
-                <button onclick="excluirGasto(${indice})">
-                Excluir
-                </button>
-            </td>
-        </tr>
-        `;
-    });
-
-    document.getElementById("total")
-    .textContent =
-    total.toFixed(2);
+    respostaIA(
+        "Não entendi esse comando."
+    );
 
 }
-
-listarGastos();
