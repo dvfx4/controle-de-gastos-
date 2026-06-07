@@ -1,77 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Gastos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro IA</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Controle de Gastos</h1>
+    <div class="container">
 
-<div>
+        <h1>Controle Financeiro IA</h1>
 
-<input id="descricao" placeholder="Descrição">
+        <div id="chat"></div>
 
-<input id="valor" type="number" step="0.01" placeholder="Valor">
+        <div class="entrada">
 
-<select id="categoria">
-    <option>Transporte</option>
-    <option>Alimentação</option>
-    <option>Faculdade</option>
-    <option>Saúde</option>
-    <option>Outros</option>
-</select>
+            <input
+                type="text"
+                id="mensagem"
+                placeholder="Ex: gastei 34 de uber hoje"
+                onkeydown="if(event.key==='Enter') enviarMensagem()"
+            >
 
-<input id="data" type="date">
+            <button onclick="enviarMensagem()">
+                Enviar
+            </button>
 
-<button onclick="adicionarGasto()">
-Adicionar
-</button>
+        </div>
 
-</div>
+    </div>
 
-<br>
-
-<label>Mês:</label>
-
-<select id="filtroMes" onchange="listarGastos()">
-    <option value="">Todos</option>
-    <option value="0">Janeiro</option>
-    <option value="1">Fevereiro</option>
-    <option value="2">Março</option>
-    <option value="3">Abril</option>
-    <option value="4">Maio</option>
-    <option value="5">Junho</option>
-    <option value="6">Julho</option>
-    <option value="7">Agosto</option>
-    <option value="8">Setembro</option>
-    <option value="9">Outubro</option>
-    <option value="10">Novembro</option>
-    <option value="11">Dezembro</option>
-</select>
-
-<h2>Total: R$ <span id="total">0</span></h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Data</th>
-<th>Descrição</th>
-<th>Categoria</th>
-<th>Valor</th>
-<th></th>
-</tr>
-</thead>
-
-<tbody id="lista"></tbody>
-
-</table>
-
-<script src="script.js"></script>
+    <script src="banco.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
