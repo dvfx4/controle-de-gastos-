@@ -1,32 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle Financeiro IA</title>
+    <title>Controle Financeiro</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="container">
 
-        <h1>Controle Financeiro IA</h1>
+        <h1>Controle Financeiro</h1>
 
-        <div id="chat"></div>
+        <div class="menu">
 
-        <div class="entrada">
+            <button onclick="mostrarAba('gastos')">
+                Gastos
+            </button>
+
+            <button onclick="mostrarAba('receber')">
+                Quem Me Deve
+            </button>
+
+            <button onclick="mostrarAba('pagar')">
+                Contas a Pagar
+            </button>
+
+            <button onclick="mostrarAba('relatorios')">
+                Relatórios
+            </button>
+
+        </div>
+
+        <!-- GASTOS -->
+
+        <div id="gastos" class="aba">
+
+            <h2>Adicionar Gasto</h2>
 
             <input
-                type="text"
-                id="mensagem"
-                placeholder="Ex: gastei 34 de uber hoje"
-                onkeydown="if(event.key==='Enter') enviarMensagem()"
-            >
+                id="descricaoGasto"
+                placeholder="Descrição">
 
-            <button onclick="enviarMensagem()">
-                Enviar
+            <input
+                id="valorGasto"
+                type="number"
+                step="0.01"
+                placeholder="Valor">
+
+            <input
+                id="categoriaGasto"
+                placeholder="Categoria">
+
+            <input
+                id="dataGasto"
+                type="date">
+
+            <button onclick="adicionarGasto()">
+                Salvar
             </button>
+
+            <h3>Lista de Gastos</h3>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaGastos"></tbody>
+
+            </table>
+
+        </div>
+
+        <!-- RECEBER -->
+
+        <div id="receber" class="aba escondido">
+
+            <h2>Quem Me Deve</h2>
+
+            <input
+                id="nomeDevedor"
+                placeholder="Nome">
+
+            <input
+                id="valorDevedor"
+                type="number"
+                step="0.01"
+                placeholder="Valor">
+
+            <button onclick="adicionarDevedor()">
+                Salvar
+            </button>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaReceber"></tbody>
+
+            </table>
+
+        </div>
+
+        <!-- PAGAR -->
+
+        <div id="pagar" class="aba escondido">
+
+            <h2>Contas a Pagar</h2>
+
+            <input
+                id="descricaoConta"
+                placeholder="Conta">
+
+            <input
+                id="valorConta"
+                type="number"
+                step="0.01"
+                placeholder="Valor">
+
+            <input
+                id="vencimentoConta"
+                type="date">
+
+            <button onclick="adicionarConta()">
+                Salvar
+            </button>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Conta</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaPagar"></tbody>
+
+            </table>
+
+        </div>
+
+        <!-- RELATÓRIOS -->
+
+        <div id="relatorios" class="aba escondido">
+
+            <h2>Relatório Mensal</h2>
+
+            <select id="mesRelatorio">
+
+                <option value="0">Janeiro</option>
+                <option value="1">Fevereiro</option>
+                <option value="2">Março</option>
+                <option value="3">Abril</option>
+                <option value="4">Maio</option>
+                <option value="5">Junho</option>
+                <option value="6">Julho</option>
+                <option value="7">Agosto</option>
+                <option value="8">Setembro</option>
+                <option value="9">Outubro</option>
+                <option value="10">Novembro</option>
+                <option value="11">Dezembro</option>
+
+            </select>
+
+            <button onclick="gerarRelatorio()">
+                Gerar
+            </button>
+
+            <div id="resultadoRelatorio"></div>
 
         </div>
 
@@ -36,4 +195,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
